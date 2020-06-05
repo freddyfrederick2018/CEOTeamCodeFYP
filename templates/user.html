@@ -1,0 +1,39 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}User{% endblock %}
+
+{% block navbar %}
+{{nav.mynavbar.render()}}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1>You are logged in as {{ name }}</h1>
+            <div>
+                <a href="{{ url_for('logout') }}">Logout</a>.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h3>Learn from your mistakes</h2>
+            <div>
+                Your recent submission:
+                {{ lastSubmissionText }}</br></br>
+                Mistakes found:
+                <ul>
+	                {%for i in mistakeList%}
+	                	<li>{{i}}</li>
+	                {%endfor%}
+                </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

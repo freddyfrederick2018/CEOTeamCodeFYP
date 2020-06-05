@@ -1,0 +1,30 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Writing{% endblock %}
+
+{% block navbar %}
+{{nav.mynavbar.render()}}
+{% endblock %}
+{% block content %}
+<p style="text-align: center;font-weight: bold;"><span style="color: #ea5703">Your essay:</span> - {{prediction[0]}}</p><br>
+<p style="text-align: center;"><a href="/writing">Back</a></p>
+
+<div class="container">
+    <div class="card" style="width: 100rem;">
+    <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span style="text-align: center;font-weight: bold;">Sentence Suggestions</span>
+      <span class="badge badge-primary badge-pill" data-toggle="tooltip" data-placement="top" title="Tooltip on top">{{prediction[2]}}</span>
+    </li>
+    <ul class="list-group list-group-flush">
+  
+        <th>{%for i in your_list%} 
+  
+      <li class="list-group-item"><span style="font-weight: lighter;">{{i}}</span></li> 
+  {%endfor%} </th>
+    </ul>
+  </div>
+    
+  </div>
+    </div>
+  </div>
+{% endblock %}

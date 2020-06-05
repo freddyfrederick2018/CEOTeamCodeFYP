@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Writing{% endblock %}
+
+{% block navbar %}
+{{nav.mynavbar.render()}}
+{% endblock %}
+{% block content %}
+		<div style="padding-left:10px;">
+			
+			<h2>Your submission results</h2><br>
+			<h3>Your Score : {{ totalscore }} / 100</h3>
+			<p>Your scores in each division</p>
+			<p>Score for contents: {{ contentscore }} / 60</p>
+			<p>Score for grammar: {{ grammarscore }} / 20</p>
+			<p>Score for format: {{ formatscore }} / 20</p>
+			
+		
+		</div>
+		
+		<div style="padding-left:10px;">
+			
+			<h3>Mistakes found in your writing</h3>
+			<ul>
+	            {%for i in mistakeList%}
+	                <li>{{i}}</li>
+	            {%endfor%}
+            </ul>		
+		</div>
+		
+		
+		
+{% endblock %}

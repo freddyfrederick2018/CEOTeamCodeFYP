@@ -1,0 +1,161 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Writing{% endblock %}
+
+{% block navbar %}
+{{nav.mynavbar.render()}}
+{% endblock %}
+{% block content %}
+		<div style="padding-left:10px;">
+			
+			<h3>Please write a short essay.</h3>
+			<p>You can write anything, as long as it is less than 100 words</p>
+			<p>Some writing suggestions will be provided to you once you have submitted</p>
+			<p>Have questions? Feel free to ask Mercury for help!</p>
+
+			<form onSubmit="return validateForm(this)" action="{{url_for('get_data')}}" method="POST">
+			
+			<textarea id="nlg" name="nlg" rows="6" cols="50" placeholder="Input your text"></textarea><br>
+			<p>Word Count: <span id="count">0</span></p>
+
+			<input type="submit" value="Check your essay">
+
+		</form>
+		
+		<style>
+		body {font-family: Arial, Helvetica, sans-serif;}
+		* {box-sizing: border-box;}
+		
+		/* Button used to open the chat form - fixed at the bottom of the page */
+		.open-button {
+		  background-color: #555;
+		  color: white;
+		  padding: 16px 20px;
+		  border: none;
+		  cursor: pointer;
+		  opacity: 0.8;
+		  position: fixed;
+		  bottom: 23px;
+		  right: 28px;
+		  width: 280px;
+		}
+		
+		/* The popup chat - hidden by default */
+		.chat-popup {
+		  display: none;
+		  position: fixed;
+		  bottom: 0;
+		  right: 15px;
+		  border: 3px solid #f1f1f1;
+		  z-index: 9;
+		}
+		
+		/* Add styles to the form container */
+		.form-container {
+		  max-width: 370px;
+		  padding: 10px;
+		  background-color: white;
+		}
+		
+		
+		/* Set a style for the submit/send button */
+		.form-container .btn {
+		  background-color: #4CAF50;
+		  color: white;
+		  padding: 16px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+		
+		/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+		
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		}
+		</style>		
+		<button class="open-button" onclick="openForm()">Chat with Mercury</button>
+
+		<div class="chat-popup" id="myForm">
+			<form action="/action_page.php" class="form-container">
+				<iframe
+				allow="microphone;"
+				width="350"
+				height="430"
+				src="https://console.dialogflow.com/api-client/demo/embedded/9896d5da-2e42-4f61-abde-6acf0290f731">
+				</iframe>
+				<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+	  		</form>
+		</div>
+
+
+		<!-- javascript -->
+		
+		<script>
+			var count = document.getElementById('count');
+			var nlg = document.getElementById('nlg');
+			var globalWordCounter = 0;
+			var WORD_LIMIT = 100;
+			
+			nlg.addEventListener('keydown', function(e) {
+			  if (globalWordCounter > WORD_LIMIT && e.code !== "Backspace") {
+			    e.preventDefault();
+			    return alert("You have reached the word limit");
+			  }
+			});
+			
+			nlg.addEventListener('keyup', function(e) {
+			  wordCounter(e.target.value);
+			});
+			
+			function isWord(str) {
+			  var alphaNumericFound = false;
+			  for (var i = 0; i < str.length; i++) {
+			    var code = str.charCodeAt(i);
+			    if ((code > 47 && code < 58) || // numeric (0-9)
+			        (code > 64 && code < 91) || // upper alpha (A-Z)
+			        (code > 96 && code < 123)) { // lower alpha (a-z)
+			      alphaNumericFound = true;
+			      return alphaNumericFound;
+			    }
+			  }
+			  return alphaNumericFound;
+			}
+			
+			function wordCounter(text) {
+			  var text = nlg.value.split(' ');
+			  var wordCount = 0;
+			  for (var i = 0; i < text.length; i++) {
+			    if (!text[i] == ' ' && isWord(text[i])) {
+			      wordCount++;
+			    }
+			  }
+			  globalWordCounter = wordCount;
+			  count.innerText = wordCount;
+			}
+			
+			function openForm() {
+				document.getElementById("myForm").style.display = "block";
+			}
+	
+			function closeForm() {
+				document.getElementById("myForm").style.display = "none";
+			}
+			
+			function validateForm() {
+			  var nlg = document.getElementById('nlg');
+			  if (!nlg.value) {
+			    alert("I cannot check a piece of writing without a single word!");
+			    nlg.focus();
+			    return false;
+			  }
+			}
+			
+		</script>
+		
+{% endblock %}
