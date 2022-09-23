@@ -31,7 +31,7 @@ ndg-httpsclient==0.5.1
 nltk==3.5
 numpy==1.18.4
 pandas==1.0.4
-protobuf==3.12.2
+protobuf==3.18.3
 pusher==2.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
